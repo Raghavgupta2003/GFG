@@ -9,22 +9,18 @@ using namespace std;
 
 class Solution{
 public:
-    vector<int> v;
-    void dec(int N){
+    void incdecre(int N,vector<int> &v){
+        if(N<=0){
+            v.push_back(N);
+            return;
+        }
         v.push_back(N);
-        if(N<=0) return;
-        dec(N-5);
-    }
-    void inc(int N,int tar){
-        if(N>=tar) return;
-        v.push_back(N+5);
-        inc(N+5,tar);
+        incdecre(N-5,v);
+        v.push_back(N);
     }
     vector<int> pattern(int N){
-        
-       if(N==0) return {0};
-       dec(N);
-       inc(v[v.size()-1],N);
+       vector<int> v;
+       incdecre(N,v);
        return v;
     }
 };
