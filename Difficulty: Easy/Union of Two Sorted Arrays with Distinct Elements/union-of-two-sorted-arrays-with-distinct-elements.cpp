@@ -12,17 +12,78 @@ class Solution {
     vector<int> findUnion(vector<int> &a, vector<int> &b) {
         // Your code here
         // return vector with correct order of elements
-        set<int> s;
-        for(int i=0;i<a.size();i++){
-            s.insert(a[i]);
+        
+        
+// APPROACH 1
+// USING SET
+
+    //     set<int> s;
+    //     for(int i=0;i<a.size();i++){
+    //         s.insert(a[i]);
+    //     }
+    //     for(int i=0;i<b.size();i++){
+    //         s.insert(b[i]);
+    //     }
+    //     vector<int> ans;
+    //     ans.assign(s.begin(),s.end());
+    //     return ans;
+    
+// APRROACH 2
+// USING TWO POINTERS
+
+
+    int i=0;
+    int j=0;
+    vector<int> v;
+    while(i<a.size() && j<b.size()){
+        if(a[i]<=b[j]){
+            if(v.size()==0 || v.back()!=a[i])
+            v.push_back(a[i]);
+            i++;
         }
-        for(int i=0;i<b.size();i++){
-            s.insert(b[i]);
+        else{
+            if(v.size()==0 || v.back()!=b[j])
+            v.push_back(b[j]);
+            j++;
         }
-        vector<int> ans;
-        ans.assign(s.begin(),s.end());
-        return ans;
     }
+    
+    if(i<a.size()){
+      for(int k = i;k<a.size();k++){
+          if(v.size()==0 || v.back()!=a[k])
+          v.push_back(a[k]);
+      }
+    }
+    if(j<b.size()){
+        for(int k = j;k<b.size();k++){
+          if(v.size()==0 || v.back()!=b[k])
+          v.push_back(b[k]);
+      }
+    }
+    
+    return v;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
 };
 
 //{ Driver Code Starts.
