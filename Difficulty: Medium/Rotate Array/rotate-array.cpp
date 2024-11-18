@@ -10,21 +10,15 @@ class Solution {
   public:
 
     // Function to rotate an array by d elements in counter-clockwise direction.
-    void reverse(int i,int j,vector<int> &arr){
-        while(i<=j){
-            swap(arr[i],arr[j]);
-            i++;
-            j--;
-        }
-    }
     void rotateArr(vector<int>& arr, int d) {
         // code here
-        int n=arr.size();
-        d=d%n;
-        if(d==0) return;
-        reverse(0,d-1,arr);
-        reverse(d,n-1,arr);
-        reverse(0,n-1,arr);
+        int n = arr.size();
+        d = d%n;
+        
+        for(int i=0;i<d;i++){
+            arr.push_back(arr[i]);
+        }
+        arr.erase(arr.begin(),arr.begin()+d);
     }
 };
 
@@ -54,6 +48,7 @@ int main() {
         d = crr[0];
         int n = arr.size();
         Solution ob;
+        // calling rotateArr() function
         ob.rotateArr(arr, d);
 
         // printing the elements of the array
@@ -61,8 +56,10 @@ int main() {
             cout << arr[i] << " ";
         }
         cout << endl;
+
+        cout << "~"
+             << "\n";
     }
     return 0;
 }
-
 // } Driver Code Ends
