@@ -5,29 +5,32 @@ using namespace std;
 // } Driver Code Ends
 class Solution{
 public:
-    bool isHappy(int n){
-        set<int> visited;
-        while(n>1){
-            int sum=0;
-            while(n>0){
-                int temp = n%10;
-                sum += temp*temp;
-                n/=10;
+    bool Happy(int N){
+        // code here
+        set<int> s;
+        while(N>1){
+            int sum = 0;
+            while(N>0){
+                sum += (N%10)*(N%10);
+                N/=10;
             }
-            n=sum;
-            if(visited.find(sum)!=visited.end()){
-                break;
-            }
-            visited.insert(sum);
+            if(s.find(sum)!=s.end()) break;
+            s.insert(sum);
+            
+            N=sum;
         }
-        if(n==1) return true;
+        if(N==1) return true;
         else return false;
-        
     }
     int nextHappy(int N){
+        // return Happy(10);
+        
         while(true){
             N++;
-            if(isHappy(N)) return N;
+            if(Happy(N)){
+                return N;
+            }
+          
         }
     }
 };
@@ -43,7 +46,9 @@ int main()
         cin>>N;
         Solution ob;
         cout << ob.nextHappy(N) << endl;
-    }
+    
+cout << "~" << "\n";
+}
     return 0; 
 }
 // } Driver Code Ends
