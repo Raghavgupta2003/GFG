@@ -11,19 +11,18 @@ class Solution
     //Function to return sum of upper and lower triangles of a matrix.
     vector<int> sumTriangles(const vector<vector<int> >& matrix, int n)
     {
-        int sumupper = 0;
-        int sumlower =0;
-        for(int i=0;i<matrix.size();i++){
-            for(int j=0;j<matrix[i].size();j++){
-                if(i<=j) sumupper+=matrix[i][j];
-                if(i>=j) sumlower+=matrix[i][j];
+        // code here
+        int sum1 = 0;
+        int sum2 =0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(i<=j) sum1+=matrix[i][j];
+                
+                if(i>=j) sum2+=matrix[i][j];
+
             }
         }
-        vector<int> v;
-        v.push_back(sumupper);
-        v.push_back(sumlower);
-        
-        return v;
+        return {sum1, sum2};
     }
 };
 
@@ -51,7 +50,9 @@ int main() {
         for (int i = 0; i < result.size(); ++i)
             cout<<result[i]<<" ";
         cout<<endl;
-    }
+    
+cout << "~" << "\n";
+}
     return 0;
 }
 // } Driver Code Ends
