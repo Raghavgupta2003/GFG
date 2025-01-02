@@ -26,16 +26,17 @@ struct Node
 class Solution {
   public:
     // Function to count nodes of a linked list.
-    bool searchKey(int n, struct Node* head, int key) {
+    bool searchKey(int n, Node* head, int key) {
         // Code here
-        if(head == NULL) return false;
-        
-        Node* temp = head;
+        bool flag = false;
         for(int i=0;i<n;i++){
-            if(temp->data == key) return true;
-            temp=temp->next;
+            if(head->data == key){
+                flag = true;
+                return flag;
+            }
+            head = head->next;
         }
-        return false;
+        return flag;
     }
 };
 
@@ -62,7 +63,10 @@ int main() {
         int key;
         cin >> key;
         Solution ob;
-        cout << ob.searchKey(n, head, key) << endl;
+        cout << (ob.searchKey(n, head, key) ? "true" : "false") << endl;
+
+        cout << "~"
+             << "\n";
     }
     return 0;
 }
