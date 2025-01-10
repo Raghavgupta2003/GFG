@@ -36,18 +36,19 @@ void printList(Node* node) {
 class Solution {
   public:
     int getKthFromLast(Node *head, int k) {
-        Node* slow= head;
+        // Your code here
+        Node* slow = head;
         Node* fast = head;
         for(int i=1;i<=k;i++){
-             if(fast==NULL) return -1;  //index out of bound
-            fast=fast->next;
-           
+            if(fast==NULL) return -1;
+            fast = fast->next;
         }
         while(fast!=NULL){
             slow=slow->next;
-            fast=fast->next;
+            fast = fast->next;
         }
         return slow->data;
+        
     }
 };
 
