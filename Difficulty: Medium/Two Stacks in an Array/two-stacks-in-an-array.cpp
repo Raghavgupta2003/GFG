@@ -17,7 +17,7 @@ class twoStacks {
         size = 100;
         arr = new int[size];
         top1 = -1;
-        top2 = size-1;
+        top2 = size;
     }
 
     // Function to push an integer into the stack1.
@@ -32,8 +32,8 @@ class twoStacks {
     void push2(int x) {
         // code here
         if(top2 < top1) return;
-        arr[top2] = x;
         top2--;
+        arr[top2] = x;
     }
 
     // Function to remove an element from top of the stack1.
@@ -48,8 +48,8 @@ class twoStacks {
     // Function to remove an element from top of the stack2.
     int pop2() {
         // code here
-        if(top2 == size-1) return -1;
-        int x = arr[top2+1];
+        if(top2 == size) return -1;
+        int x = arr[top2];
         top2++;
         return x;
     }
