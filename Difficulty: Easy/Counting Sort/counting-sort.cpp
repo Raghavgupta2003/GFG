@@ -7,6 +7,7 @@ using namespace std;
 
 
 // } Driver Code Ends
+
 //User function Template for C++
 
 class Solution{
@@ -15,23 +16,11 @@ class Solution{
     //order using Counting Sort.
     string countSort(string arr){
         // code here
-        vector<int> v(26,0);
-        for(int i=0;i<arr.size();i++){
-            v[arr[i]-97]++;
-        }
-        string str = "";
-        for(int i=0;i<26;i++){
-            if(v[i]!=0){
-                for(int j=0;j<v[i];j++){
-                    str+=(i+97);
-                }
-            }
-        }
-        
-        return str;
-        
+        sort(arr.begin(),arr.end());
+        return arr;
     }
 };
+
 
 
 //{ Driver Code Starts.
