@@ -37,34 +37,27 @@ class Node {
 
 class Solution {
   public:
-    bool path(vector<Node*> &v, Node* root, Node* n,bool &left, bool &right){
+    bool path(vector<Node*> &v, Node* root, Node* n){
         if(root == NULL) return false;
         
         if(root->data == n->data){
             v.push_back(root);
             return true;
         }
-        else if(n->data < root->data){
-            left =  path(v, root->left, n, left,right);
-        }
-        else{
-            right =  path(v, root->right, n, left,right);
-        }
-        
-        if(left || right){
+
+       if(path(v, root->left, n) || path(v, root->right, n)){
             v.push_back(root);
             return true;
         }
-        else return false;
+        
+        return false;
     }
     Node* LCA(Node* root, Node* n1, Node* n2) {
         // code here
         vector<Node*> v1;
-        bool left = false;
-        bool right = false;
-        path(v1, root, n1, left,right);
+        path(v1, root, n1);
         vector<Node*> v2;
-        path(v2, root, n2, left, right);
+        path(v2, root, n2);
         
         int i = v1.size()-1;
         int j = v2.size()-1;
