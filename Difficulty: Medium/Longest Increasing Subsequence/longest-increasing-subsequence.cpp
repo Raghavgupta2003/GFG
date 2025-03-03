@@ -5,26 +5,66 @@ using namespace std;
 
 // } Driver Code Ends
 
+// class Solution {
+//   public:
+//     bool isLIS(vector<int> v){
+//          if (v.size() < 2) return true; 
+//         for(int i=0; i<v.size()-1; i++){
+//             if(v[i]>v[i+1]) return false;
+            
+//         }
+//         return true;
+//     }
+//     void subseq(int idx, vector<int>& arr,vector<int> &v, int &ans){
+//         if(idx>=arr.size()){
+//             int n = v.size();
+//             if(isLIS(v)) ans = max(ans, n);
+//             return;
+//         }
+//         //pick
+//         v.push_back(arr[idx]);
+//         subseq(idx+1, arr, v,ans);
+//         v.pop_back();
+        
+//         //not pick
+//         subseq(idx+1, arr, v,ans);
+//     }
+//     int lis(vector<int>& arr) {
+//         // code here
+//         vector<int> v;
+//         int ans = 0;
+//         subseq(0,arr,v,ans);
+//         return ans;
+//     }
+// };
 
 class Solution {
   public:
-    // Function to find length of longest increasing subsequence.
-    int longestSubsequence(vector<int>& arr) {
-        // code here
-        int n = arr.size();
-        if(n==0) return 0;
-        vector<int> dp(n,1);
-        int maxlength = 1;
-        for(int i=0;i<n;i++){
-            for(int j=0;j<i;j++){
-                if(arr[j]<arr[i])  dp[i] = max(dp[i],dp[j]+1);
-            }
-            maxlength = max(maxlength,dp[i]);
+    int subseq(int idx,int prev, vector<int>& arr, vector<vector<int>> &dp){
+        if(idx>=arr.size()){
+            // return size;
+            return 0;
         }
         
-        return maxlength;
+        //pick
+        if(dp[idx][prev+1] != -1) return dp[idx][prev+1];
+        int pick = 0;
+        if(prev == -1 || arr[prev]<arr[idx]){
+            pick = 1 +  subseq(idx+1,idx, arr,dp);
+        }
+        //not pick
+        int notpick = 0 + subseq(idx+1,prev, arr,dp);
+        
+        return dp[idx][prev+1] = max(pick, notpick);
+    }
+    int lis(vector<int>& arr) {
+        // code here
+        vector<vector<int>> dp(arr.size(), vector<int> (arr.size()+1, -1));
+        
+        return subseq(0,-1,arr,dp);
     }
 };
+
 
 //{ Driver Code Starts.
 
@@ -46,7 +86,8 @@ int main() {
             arr.push_back(num);
 
         Solution obj;
-        cout << obj.longestSubsequence(arr) << endl;
+        cout << obj.lis(arr) << endl;
+        cout << "~" << endl;
     }
 
     return 0;
