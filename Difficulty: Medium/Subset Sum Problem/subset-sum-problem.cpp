@@ -5,23 +5,35 @@ using namespace std;
 
 
 // } Driver Code Ends
+
 // User function template for C++
 
 class Solution {
   public:
+    bool isexist(int idx, vector<int>& arr, int target, vector<vector<int>>& dp){
+       
+        if(target == 0) return true;
+         if(idx<0) return false;
+        //  if(idx == 0) return arr[idx] == target;
+        
+        if(dp[idx][target]!= -1) return dp[idx][target];
+        bool pick = false;
+        if(arr[idx]<=target) pick = isexist(idx-1, arr, target-arr[idx], dp);
+        
+        bool notpick = isexist(idx-1, arr, target, dp);
+        
+        return dp[idx][target] = (pick || notpick);
+    }
     bool isSubsetSum(vector<int>& arr, int target) {
-        vector<bool> dp(target + 1, false);
-        dp[0] = true; // Base case: sum 0 is always possible
-    
-        for (int num : arr) {
-            for (int j = target; j >= num; --j) {
-                dp[j] = dp[j] || dp[j - num];
-            }
-        }
-    
-        return dp[target];
+        // code here
+        int n = arr.size();
+        int idx = n-1;
+        // vector<vector<int>> dp(200+1, vector<int>(4*10000 + 1, -1));
+         vector<vector<int>> dp(n, vector<int>(target + 1, -1));
+        return isexist(idx, arr, target, dp);
     }
 };
+
 
 //{ Driver Code Starts.
 
