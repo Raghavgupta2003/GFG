@@ -5,37 +5,16 @@ using namespace std;
 
 // } Driver Code Ends
 
-// class Solution {
-//   public:
-//     int  helper(int idx, int W, vector<int> &val, vector<int> &wt, vector<vector<int>>& dp){
-//         if(idx >= val.size()) return 0;
-        
-//         if(dp[idx][W] != -1) return dp[idx][W];
-        
-//         int pick = 0;
-//         if(W >= wt[idx]) pick = val[idx] + helper(idx+1, W-wt[idx], val, wt, dp);
-//         int notpick = 0 + helper(idx+1, W, val, wt, dp);
-        
-//         return dp[idx][W] = max(pick, notpick);
-//     }
-//     int knapsack(int W, vector<int> &val, vector<int> &wt) {
-//         // code here
-//         int n = val.size();
-//         vector<vector<int>> dp(n, vector<int>(W+1, -1));
-//         return helper(0, W, val, wt, dp);
-//     }
-// };
-
 class Solution {
   public:
     int  helper(int idx, int W, vector<int> &val, vector<int> &wt, vector<vector<int>>& dp){
-        if(idx < 0) return 0;
+        if(idx >= val.size()) return 0;
         
         if(dp[idx][W] != -1) return dp[idx][W];
         
         int pick = 0;
-        if(W >= wt[idx]) pick = val[idx] + helper(idx-1, W-wt[idx], val, wt, dp);
-        int notpick = 0 + helper(idx-1, W, val, wt, dp);
+        if(W >= wt[idx]) pick = val[idx] + helper(idx+1, W-wt[idx], val, wt, dp);
+        int notpick = 0 + helper(idx+1, W, val, wt, dp);
         
         return dp[idx][W] = max(pick, notpick);
     }
@@ -43,9 +22,12 @@ class Solution {
         // code here
         int n = val.size();
         vector<vector<int>> dp(n, vector<int>(W+1, -1));
-        return helper(n-1, W, val, wt, dp);
+        return helper(0, W, val, wt, dp);
     }
 };
+
+
+
 
 
 //{ Driver Code Starts.
