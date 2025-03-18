@@ -5,35 +5,37 @@ using namespace std;
 
 
 // } Driver Code Ends
-// User function Template for C++
 
 class Solution {
   public:
+    bool helper(int idx, vector<int>& arr, int target, vector<vector<int>>& dp){
+        if(target == 0) return true;
+        if(idx == 0) return (arr[idx] == target);
+        
+        
+        if(dp[idx][target] != -1) return dp[idx][target];
+        bool pick = false;
+        if(arr[idx] <= target) pick =  helper(idx-1, arr, target-arr[idx], dp);
+        
+        bool notpick = helper(idx-1, arr, target, dp);
+        
+        return dp[idx][target] = pick || notpick;
+    }
     bool equalPartition(vector<int>& arr) {
         // code here
-        int totalSum = 0;
-        for (int num : arr) {
-            totalSum += num;
+        int n = arr.size();
+        int target = 0;
+        for(int i=0; i<arr.size(); i++){
+            target+= arr[i];
         }
-        // If the total sum is odd, partitioning is not possible
-        if (totalSum % 2 != 0) {
-            return false;
-        }
-    
-        int target = totalSum / 2;
-        vector<bool> dp(target + 1, false);
-        dp[0] = true; // Base case: sum 0 is always possible
-    
-        // Update dp array for each element
-        for (int num : arr) {
-            for (int j = target; j >= num; --j) {
-                dp[j] = dp[j] || dp[j - num];
-            }
-        }
-    
-        return dp[target];
+        if(target % 2!=0) return false;
+        target = target/2;
+        
+        vector<vector<int>> dp(n, vector<int>(target+1, -1));
+        return helper(n-1, arr, target, dp);
     }
 };
+
 
 //{ Driver Code Starts.
 
