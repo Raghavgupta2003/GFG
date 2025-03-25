@@ -8,30 +8,23 @@ using namespace std;
 class Solution {
   public:
     // Function to detect cycle in an undirected graph.
-    bool cycle(int node, vector<vector<int>>& adj, vector<int>& visited){
-        queue<pair<int, int>> q; //{node, parent}
-        q.push({node, -1});
+    bool cycle(int node, int parent, vector<vector<int>>& adj, vector<int>& visited){
+        
         visited[node] = 1;
         
-        while(q.size()>0){
-            int ele = q.front().first;
-            int parent = q.front().second;
-            
-            q.pop();
-            
-            for(auto it : adj[ele]){
-                if(!visited[it]){
-                    q.push({it, ele});
-                    visited[it] = 1;
-                }
-                else{
-                    if(it != parent) return true;
-                    // "it" can only be visited when "it" is parent
-                    // if "it" visited and not parent means there is cycle;
-                }
+        for(auto it: adj[node]){
+            if(!visited[it]){
+                bool x = cycle(it, node, adj, visited);
+                if(x == true) return true;
+                visited[it] = 1;
+            }
+            else{
+                if(it != parent) return true;
             }
         }
+        
         return false;
+        
     }
     bool isCycle(vector<vector<int>>& adj) {
         // Code here
@@ -42,7 +35,7 @@ class Solution {
         // checking for all components
         for(int i=0; i<visited.size(); i++){
             if(!visited[i]){
-                if(cycle(i, adj, visited)) return true;
+                if(cycle(i, -1, adj, visited)) return true;
             }
         }
         
