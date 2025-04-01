@@ -8,28 +8,32 @@ using namespace std;
 class Solution {
   public:
     // Function to return Breadth First Traversal of given graph.
-    vector<int> bfsOfGraph(vector<vector<int>> &adj) {
+    vector<int> bfs(vector<vector<int>> &adj) {
         // Code here
-        vector<int> ans;
-        int n = adj.size(); //nodes + 1
+        int n = adj.size(); // NUMBER OF NODES
         vector<int> visited(n, 0);
+        
         queue<int> q;
         q.push(0);
         visited[0] = 1;
         
-        while(q.size()>0){
+        vector<int> v;
+        
+        while(q.size() > 0){
             int cur = q.front();
+            
             q.pop();
-            vector<int> v = adj[cur];
-            for(int i=0; i<v.size(); i++){
-                if(!visited[v[i]]){
-                    q.push(v[i]);
-                    visited[v[i]] = 1;
+            
+            for(auto it : adj[cur]){
+                if(!visited[it]){
+                    q.push(it);
+                    visited[it] = 1;
                 }
             }
-            ans.push_back(cur);
+            v.push_back(cur);
         }
-        return ans;
+        
+        return v;
     }
 };
 
@@ -39,26 +43,33 @@ class Solution {
 int main() {
     int tc;
     cin >> tc;
+    cin.ignore();
     while (tc--) {
-        int V, E;
-        cin >> V >> E;
-
-        // Now using vector of vectors instead of array of vectors
+        int V;
+        cin >> V;
+        cin.ignore();
+        // Use vector of vectors instead of array of vectors.
         vector<vector<int>> adj(V);
 
-        for (int i = 0; i < E; i++) {
-            int u, v;
-            cin >> u >> v;
-            adj[u].push_back(v);
-            adj[v].push_back(u); // For undirected graph, add both u->v and v->u
+        for (int i = 0; i < V; i++) {
+            string input;
+            getline(cin, input);
+            int num;
+            vector<int> node;
+            stringstream ss(input);
+            while (ss >> num) {
+                node.push_back(num);
+            }
+            adj[i] = node;
         }
 
         Solution obj;
-        vector<int> ans = obj.bfsOfGraph(adj);
+        vector<int> ans = obj.bfs(adj);
         for (int i = 0; i < ans.size(); i++) {
             cout << ans[i] << " ";
         }
         cout << endl;
+        cout << "~" << endl;
     }
     return 0;
 }
