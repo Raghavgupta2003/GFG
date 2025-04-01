@@ -22,11 +22,16 @@ class Solution {
             q.pop();
             
             for(auto it : adj[cur]){
+                // if the adjacent node is yet not colored.
+                // you will give the opposite color of the node
                 if(color[it] == -1){
                     q.push(it);
                     color[it] = !(color[cur]);
                 }
                 else{
+                    // is the adjacent guy already colores
+                    // is the adjacent guy having the same color
+                    //someone did color it on some otherpath
                     if(color[it] == color[cur]) return false;
                 }
             }
