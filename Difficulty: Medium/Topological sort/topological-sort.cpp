@@ -7,17 +7,6 @@ using namespace std;
 
 class Solution {
   public:
-    void dfs(int node,  vector<int>& visited, vector<vector<int>>& adj, stack<int>& st){
-        
-        visited[node] = 1;
-        for(auto it : adj[node]){
-            if(!visited[it]){
-                dfs(it, visited, adj, st);
-            }
-        }
-        
-        st.push(node);
-    }
     vector<int> topoSort(int n, vector<vector<int>>& edges){
         // code here
         // TOPOLOGICAL SORT ALWAYS AVAILABLE IN DIRECTED ACYCLIC GRAPH
@@ -31,23 +20,39 @@ class Solution {
             adj[a].push_back(b);
             // adj[b].push_back(a); -> it will not be there because we have directed graph
         }
-        vector<int> visited(n, 0);
         
-        stack<int> st; // to store topological sort
+        vector<int> indegree(n);
         for(int i=0; i<n; i++){
-            if(!visited[i]){
-                dfs(i, visited, adj, st);
+           for(auto it : adj[i]){
+               indegree[it]++;
+           }
+        }
+        
+        // for(int i=0; i<indegree.size(); i++){
+        //   cout<<indegree[i]<<" ";
+        // }
+        queue<int> q;
+        vector<int> toposort;
+        // pushing to queue which has indegree 0;
+        for(int i=0; i<indegree.size(); i++){
+            if(indegree[i] == 0) q.push(i);
+        }
+        
+        //BFS
+        while(q.size() > 0){
+            int node = q.front();
+            q.pop();
+            toposort.push_back(node);
+            
+            //node is in your toposort
+            //remove its indegree
+            for(auto it : adj[node]){
+                indegree[it]--;
+                if(indegree[it] == 0) q.push(it);
             }
         }
         
-        vector<int> ans;
-        while(st.size() > 0){
-            // cout<<st.top()<<" ";
-            ans.push_back(st.top());
-            st.pop();
-        }
-        
-        return ans;
+        return toposort;
     }
 };
 
