@@ -5,6 +5,7 @@ using namespace std;
 
 // } Driver Code Ends
 
+
 class Solution {
   public:
     vector<int> topoSort(int n, vector<vector<int>>& edges){
@@ -57,6 +58,8 @@ class Solution {
 };
 
 
+
+
 //{ Driver Code Starts.
 
 int check(int V, vector<int> &res, vector<vector<int>> adj) {
@@ -96,9 +99,11 @@ int main() {
 
         Solution obj;
         vector<int> res = obj.topoSort(V, edges);
-
-        cout << check(V, res, adj) << endl;
-
+        bool ans = check(V, res, adj);
+        if (ans)
+            cout << "true\n";
+        else
+            cout << "false\n";
         cout << "~"
              << "\n";
     }
